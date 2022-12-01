@@ -1,3 +1,9 @@
+# Advent of code 2022
+...in clojure using wonderful set up provided by [Martin Kavalar](https://github.com/mk) check out the [original](https://github.com/nextjournal/advent-of-clerk)
+
+Thanks for your work Martin!
+
+
 # 🎄 Advent of Clerk
 
 A template repo for folks wanting to do [Advent of

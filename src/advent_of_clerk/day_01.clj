@@ -21,7 +21,6 @@
 (defn p2 [input]
   (apply + (take 3 (sort > input))))
 
-
 ;; ##### Results
 (p1 data)
 (p2 data)
