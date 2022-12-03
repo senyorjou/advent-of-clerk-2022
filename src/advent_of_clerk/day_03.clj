@@ -14,8 +14,8 @@
 ;; Creates a map of chars \a 1 \b 2 ... \Z 52
 (def char-map
   (merge
-   (zipmap (map char (char-range \a \z)) (range 1 27))
-   (zipmap (map char (char-range \A \Z)) (range 27 53))))
+   (zipmap (char-range \a \z) (range 1 27))
+   (zipmap (char-range \A \Z) (range 27 53))))
 
 (defn find-repeated-char [s]
   "Splits a string in two, and finds repeated char"
