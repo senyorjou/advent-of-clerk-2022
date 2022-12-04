@@ -28,8 +28,6 @@
       (<= f2 f1 t2)
       (<= f2 t1 t2)))
 
-
-
 ;; ### Puzzle 1. Find contained ranges
 (defn p1 [input]
   (->> input
@@ -38,7 +36,6 @@
       count))
 
 (p1 data)
-
 
 ;; ### Puzzle 2. Find overlapping ranges
 (defn p2 [input]
