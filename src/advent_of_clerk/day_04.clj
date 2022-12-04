@@ -4,9 +4,6 @@
             [clojure.set :as set]
             [clojure.string :as str]))
 
-
-
-;; (def data (str/split-lines (slurp "resources/day_04_sample.txt")))
 (def data (str/split-lines (slurp "resources/day_04.txt")))
 
 (defn parse-line [line]
