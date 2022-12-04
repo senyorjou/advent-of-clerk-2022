@@ -7,11 +7,12 @@
 
 (def raw-data (slurp "resources/day_03.txt"))
 
+;; Creates a map of chars \a 1 \b 2 ... \Z 52
+^{::clerk/visibility {:result :hide}}
 (defn char-range [from to]
   "Creates a range of chars from to"
   (map char (range (int from) (inc (int to)))))
 
-;; Creates a map of chars \a 1 \b 2 ... \Z 52
 (def char-map
   (merge
    (zipmap (char-range \a \z) (range 1 27))
