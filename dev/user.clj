@@ -5,5 +5,4 @@
 (clerk/serve! {:port 7878 :browse true})
 
 (comment
-  (clerk/build! {:paths (index/build-paths) :browse true}))
-
+  (clerk/build! {:paths (index/build-paths) :browse true :bundle true})
