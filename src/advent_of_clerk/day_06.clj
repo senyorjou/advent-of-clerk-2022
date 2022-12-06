@@ -8,8 +8,7 @@
 (defn some-repeated?
   "Checks if sample has repeated chars"
   [sample]
-  (not= (count (set sample))
-        (count sample)))
+  (apply (complement distinct?) sample))
 
 
 ;; ### Puzzle 1. Find first sequence of unique chars of len `size`
