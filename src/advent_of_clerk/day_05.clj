@@ -4,11 +4,35 @@
             [clojure.string :as str]))
 
 (def raw-data (slurp "resources/day_05.txt"))
-
+(def only-columns (slurp "resources/day_05_columns.txt" ))
 
 (defn parse-crates [lines]
-  (zipmap (range 1 10)
-          (map #(re-seq #".{1,4}" %) (butlast (str/split-lines lines)))))
+  ;; (zipmap (range 1 10)
+  (let [lines (map #(re-seq #".{1,4}" %) (butlast (str/split-lines lines)))]
+    (for [index (range 1 10)
+          line lines]
+      ))
+
+
+(defn parse-2 [data]
+  (let [lines (str/split-lines data)
+        crates (take-while seq lines)
+        raw-cols (apply mapv str crates)
+        cols (map #(re-seq #"\d+" %) raw-cols)]
+    cols))
+
+
+(comment
+  (apply mapv str (parse-crates only-columns))
+
+  (parse-2 only-columns)
+
+
+  (for [y (seq "ab")
+        x (range 1 3)
+       ]
+    (str x y))
+  (mapv str [1 2 3] [4 5 6])
 
 
 (defn parse-moves [input]
@@ -64,3 +88,10 @@
         (apply str))))
 
 (p2 data)
+
+
+(comment
+
+  (first (parse-crates only-columns))
+
+  )
