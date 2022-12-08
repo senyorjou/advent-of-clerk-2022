@@ -27,56 +27,22 @@
               (> pivot (apply max right)))
       [row-pos pos])))
 
-(defn visible-tree-on-row [row-pos pos]
-  (let [row (nth rows row-pos)
-        left (take pos row)
-        right (drop (inc pos) row)
-        pivot (nth row pos)]
-    (if (or (empty? left)
-            (empty? right)
-            (> pivot (apply max left))
-            (> pivot (apply max right)))
-      [row-pos pos]
-      false)))
-
-(defn visible-tree-on-column [row-pos pos]
-  (let [row (nth columns row-pos)
-        left (take pos row)
-        right (drop (inc pos) row)
-        pivot (nth row pos)]
-    (if (or (empty? left)
-            (empty? right)
-            (> pivot (apply max left))
-            (> pivot (apply max right)))
-      [row-pos pos]
-      false)))
-
-
-;; (def row-coords
-;;   (for [row (range (count rows))
-;;         tree (range (count (nth rows row)))
-;;         :when (visible-tree-on-row row tree)]
-;;   [row tree]))
-
-;; (def col-coords
-;;   (for [column (range (count columns))
-;;         tree (range (count (nth columns column)))
-;;         :when (visible-tree-on-column column tree)]
-;;     [tree column]))
-
 
 ;; ### Puzzle 1. Find visible trees
 (defn p1 [input]
-  (let [row-coords  (for [row (range (count rows))
+  (let [rows (map str->ints data)
+        columns (apply map list rows)
+        row-coords  (for [row (range (count rows))
                           tree (range (count (nth rows row)))
-                          :when (visible-tree-on-row row tree)]
+                          :when (visible-trees rows row tree)]
                       [row tree])
         col-coords (for [column (range (count columns))
                          tree (range (count (nth columns column)))
-                         :when (visible-tree-on-column column tree)]
+                         :when (visible-trees columns column tree)]
                      [tree column])]
 
     (count (distinct (concat row-coords col-coords)))))
+(p1 data)
 
 (assert (= (p1 data) 1870))
 
@@ -97,39 +63,24 @@
         right (count-trees (drop (inc pos) row) pivot)]
     (* (count left) (count right))))
 
-(def row-scenics
-  (for [row (range (count rows))
-        tree (range (count (nth rows row)))
-        :let [scenic (scenic-on-row (nth rows row) tree)]]
-  [[row tree] scenic]))
 
-(def col-scenics
-  (for [col (range (count columns))
-        tree (range (count (nth columns col)))
-        :let [scenic (scenic-on-row (nth columns col) tree)]]
-  [[tree col] scenic]))
+;; ### Puzzle 2. Count most scenic spot, the place with more trees at range
+(defn p2 [input]
+  (let [rows (map str->ints data)
+        columns (apply map list rows)
+        row-scenics (for [row (range (count rows))
+                          tree (range (count (nth rows row)))
+                          :let [scenic (scenic-on-row (nth rows row) tree)]]
+                      [[row tree] scenic])
+        col-scenics (for [col (range (count columns))
+                          tree (range (count (nth columns col)))
+                          :let [scenic (scenic-on-row (nth columns col) tree)]]
+                      [[tree col] scenic])
+        row-reduced (reduce (fn [acc [k v]] (assoc acc k v)) {} row-scenics)
+        col-reduced (reduce (fn [acc [k v]] (assoc acc k v)) {} col-scenics)]
 
-(def row-scenics-reduced (reduce (fn [acc [k v]]
-                                   (assoc acc k v)) {} row-scenics))
+    (apply max (vals (merge-with * row-reduced col-reduced)))))
 
-(def col-scenics-reduced (reduce (fn [acc [k v]]
-                                   (assoc acc k v)) {} col-scenics))
+(p2 data)
+(assert (= (p2 data) 517440))
 
-(apply max (vals (merge-with * row-scenics-reduced col-scenics-reduced)))
-
-
-(comment
-;; 30373
-;; 25512
-;; 65332
-;; 33549
-;; 35390
-;; 3 2 6 3 3
-;; 0 5 5 3 5
-;; 3 5 3 5 3
-;; 7 1 3 4 9
-;; 3 2 2 9 0
-;;
-;;
-;;RESPONSE 2152
-)
