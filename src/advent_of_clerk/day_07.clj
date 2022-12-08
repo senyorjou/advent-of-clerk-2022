@@ -8,7 +8,6 @@
 (def data (str/split-lines raw-data))
 
 
-
 ;; ### Create tree
 (defn create-tree [input]
   (loop [lines input
