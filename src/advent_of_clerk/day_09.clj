@@ -77,3 +77,32 @@
 (p2)
 
 (assert (= (p2) 2493))
+
+(def x-values (map first head-path))
+(def y-values (map second head-path))
+
+(def tail-list (distinct (make-tail-path head-path)))
+
+(def x-tail (map first tail-list))
+(def y-tail (map second tail-list))
+
+(clerk/plotly {:data [{:x x-tail
+                       :y y-tail
+                       :mode "markers"
+                       :type "scatter"
+                       :marker {:size 2}}]
+
+               :layout {:showlegend false
+                        :xaxis {:visible false
+                                :showgrid false
+                                :zeroline false
+                                :showline false}
+                        :yaxis {:visible false
+                                :showgrid false
+                                :zeroline false
+                                :showline false}
+                        :margin {:l 20 :r 0 :b 20 :t 20}}
+               :config {:displayModeBar false
+                        :displayLogo false
+                        :showTips false
+                        :staticPlot true}})
