@@ -13,9 +13,6 @@
        (map parse-long)))
 
 
-(def rows (map str->ints data))
-(def columns (apply map list rows))
-
 (defn visible-trees [rows row-pos pos]
   (let [row (nth rows row-pos)
         left (take pos row)
