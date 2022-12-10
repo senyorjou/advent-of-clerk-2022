@@ -59,9 +59,9 @@
 ;; ### Puzzle 2': Visual reprtesentation
 (defn get-row-coordinates [row line]
   (keep-indexed (fn [idx val]
-               (if (= val \#)
-                   [(* 5 idx) (* row 2)]))
-             line))
+                  (if (= val \#)
+                    [(* 5 idx) (* row 1.5)]))
+                line))
 
 (defn draw-message [input]
   (let [lines (reverse (p2 input))]
