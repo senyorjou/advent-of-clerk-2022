@@ -78,16 +78,9 @@
 
 (assert (= (p2) 2493))
 
-(def x-values (map first head-path))
-(def y-values (map second head-path))
 
-(def tail-list (distinct (make-tail-path head-path)))
-
-(def x-tail (map first tail-list))
-(def y-tail (map second tail-list))
-
-(clerk/plotly {:data [{:x x-tail
-                       :y y-tail
+(clerk/plotly {:data [{:x (map first head-path)
+                       :y (map second head-path)
                        :mode "markers"
                        :type "scatter"
                        :marker {:size 2}}]
