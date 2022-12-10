@@ -35,17 +35,14 @@
             (= (p1 data) 13140))) ;; demo
 
 
+(defn draw-pixel [[pos value]]
+  "Draws # if pos is +- 1 the value"
+  (if (<= -1 (- value pos) 1) "#" "."))
 
 (defn map-values-to-screen [row]
   "Engine for drawing a pixel. If current position is on +- 1 of cycle value draws a #, else ."
-  (let [key-values (map (fn [stack col]
-                          [col stack])
-                        row (range))]
-    (str/join (map (fn [[pos value]]
-                     (if (<= -1 (- value pos) 1)
-                       "#"
-                       "."))
-                   key-values))))
+  (let [key-values (map-indexed vector row)]
+    (str/join (map draw-pixel key-values))))
 
 ;; ### Puzzle 2. Draw 40 chars lines with mapped values of the cycles
 (defn p2 [input]
@@ -57,3 +54,39 @@
 
 
 (p2 data)
+
+
+;; ### Puzzle 2': Visual reprtesentation
+(defn get-row-coordinates [row line]
+  (keep-indexed (fn [idx val]
+               (if (= val \#)
+                   [(* 5 idx) (* row 2)]))
+             line))
+
+(defn draw-message [input]
+  (let [lines (reverse (p2 input))]
+    (apply concat (map get-row-coordinates (range) lines))))
+
+(clerk/plotly {:data [{:x (map first (draw-message data))
+                       :y (map second (draw-message data))
+                       :mode "markers"
+                       :type "scatter"
+                       :marker {:size 25}}]
+
+               :layout {:showlegend false
+                        :xaxis {:visible false
+                                :showgrid false
+                                :zeroline false
+                                :showline false}
+                        :yaxis {:visible false
+                                :showgrid false
+                                :zeroline false
+                                :showline false
+                                :range [-10  24]
+                                :type "linear"
+                                :autorange false}
+                        :margin {:l 0 :r 0 :b 0 :t 0}}
+               :config {:displayModeBar false
+                        :displayLogo false
+                        :showTips false
+                        :staticPlot true}})
